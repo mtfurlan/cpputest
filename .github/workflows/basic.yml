@@ -217,6 +217,7 @@ jobs:
 
       - name: Install packages
         run: |
+          false
           sudo apt-get update
           sudo apt-get install -y ${{ matrix.apt_packages }}
         if: ${{ matrix.apt_packages }}
