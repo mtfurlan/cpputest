@@ -12,7 +12,7 @@ jobs:
       - name: "debug stuff"
         run: |
           env
-        with:
+        env:
           EVENT: github.event
 
   release:
