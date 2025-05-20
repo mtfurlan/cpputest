@@ -13,7 +13,7 @@ jobs:
         run: |
           env
         env:
-          EVENT: github.event
+          EVENT: ${{github.event}}
 
   release:
     runs-on: ubuntu-latest
