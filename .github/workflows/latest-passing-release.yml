@@ -1,0 +1,24 @@
+---
+name: 'Latest Passing Release'
+"on":
+  workflow_run:
+    workflows: ['Basic builds']
+    types:
+      - completed
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "debug stuff"
+        run: |
+          env
+        with:
+          EVENT: github.event
+
+  release:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: "build release"
+        run: |
+          echo "totally building"
