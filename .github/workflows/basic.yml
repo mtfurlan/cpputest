@@ -16,6 +16,7 @@ jobs:
     env:
       LDFLAGS: -static
     steps:
+      - run: false
       - uses: actions/checkout@v3
       - uses: msys2/setup-msys2@v2
         with:
