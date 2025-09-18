@@ -11,6 +11,7 @@ jobs:
     strategy:
       matrix:
         include:
+          - name: Linux gcc
             os: ubuntu-latest
             cc: gcc
             cxx: g++
