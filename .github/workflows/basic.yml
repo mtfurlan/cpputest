@@ -5,10 +5,30 @@ name: Basic builds
   push:
   pull_request:
 
+# for testing, have one thing that will pass or fail
 jobs:
-
-  foo:
-    name: pass or fail
-    runs-on: ubuntu-latest
+  autotools:
+    strategy:
+      matrix:
+        include:
+            os: ubuntu-latest
+            cc: gcc
+            cxx: g++
+            make_args: tdd
+    runs-on: ${{ matrix.os }}
+    name: Autotools ${{ matrix.name }}
     steps:
-        run: true
+      - name: Checkout
+        uses: actions/checkout@main
+      - run: brew install automake libtool
+        if: ${{ startswith(matrix.os, 'macos') }}
+      - if: ${{ matrix.cxx }}
+        run: echo "CXX=${{ matrix.cxx }}" >> $GITHUB_ENV
+      - if: ${{ matrix.cc }}
+        run: echo "CC=${{ matrix.cc }}" >> $GITHUB_ENV
+      - name: Configure
+        run: |
+          autoreconf -i .
+          ./configure ${{ matrix.configure_args }}
+      - name: Build and test
+        run: make ${{ matrix.make_args }}
